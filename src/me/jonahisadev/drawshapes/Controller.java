@@ -8,6 +8,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polygon;
 
+import java.util.Optional;
+
 public class Controller {
 
     @FXML
@@ -41,6 +43,14 @@ public class Controller {
     }
 
     private void addPoint() {
+        if (xInput.getText().isEmpty() || yInput.getText().isEmpty()) {
+            Optional<ButtonType> res =
+                    new Alert(Alert.AlertType.ERROR, "Please enter an X and a Y!")
+                            .showAndWait();
+            if (res.isPresent() && res.get() == ButtonType.OK)
+                return;
+        }
+
         int x = Integer.parseInt(xInput.getText());
         int y = Integer.parseInt(yInput.getText());
         points.getItems().add(new Point(x, y));
